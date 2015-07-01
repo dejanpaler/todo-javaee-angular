@@ -1,0 +1,124 @@
+<div class="row">
+  <div class="col-md-3">
+    <div class="list-group" bs-navbar>
+      <a href="/todos" class="list-group-item" data-dp-active-match-route='/todos'>
+          <span class="badge pull-right" data-ng-show="todos.todos.length > 0">
+            {{todos.todos.length}}
+          </span>
+        <span>All todos</span>
+      </a>
+      <a href="/todos/active" class="list-group-item" data-dp-active-match-route='/todos/active'>
+          <span class="badge pull-right" data-ng-show="activeTodos.length > 0">
+            {{activeTodos.length}}
+          </span>
+        <span>Active todos</span>
+      </a>
+      <a href="/todos/completed" class="list-group-item" data-dp-active-match-route='/todos/completed'>
+          <span class="badge pull-right" data-ng-show="completedTodos.length > 0">
+            {{completedTodos.length}}
+          </span>
+        <span>Completed todos</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="col-md-9">
+    <div class="row">
+      <div class="col-md-10">
+        <form id="todo-form" class="todoInputForm" data-ng-submit="todos.addTodo()">
+          <input id="new-todo" type="text" class="form-control input-sm todoInput"
+                 placeholder="What needs to be done?"
+                 data-ng-model="todos.newTodo" autofocus>
+        </form>
+      </div>
+    </div>
+
+    <div class="row">
+      <!--     active todos -->
+      <div data-ng-class="todos.showTodo.active && todos.showTodo.completed ? 'col-md-5' : 'col-md-10'">
+        <div data-ng-show="todos.showTodo.active">
+          <span class="label label-default">Active todos</span>
+
+          <div class="input-group input-group-sm input-group-space animate"
+               data-ng-repeat="todo in activeTodos = (todos.todos | filter: {completed: false})">
+            <span class="input-group-btn">
+              <button class="btn btn-default btn-todo" type="button" data-ng-click="todos.todoCompleted(todo)">
+                <span class="glyphicon glyphicon-unchecked"></span>
+              </button>
+            </span>
+
+            <form data-ng-submit="todos.doneEditing(todo)" data-ng-show="todo == todos.editedTodo">
+              <input type="text" class="form-control input-sm todoInput" data-ng-model="todo.title"
+                     data-ng-blur="todos.doneEditing(todo)"
+                     data-todo-escape="todos.revertEditing(todo)" data-todo-focus="todo == todos.editedTodo">
+            </form>
+
+            <label class="todoLabel hideOverflow" data-ng-hide="todo == todos.editedTodo"
+                   data-ng-dblclick="todos.editTodo(todo)">{{todo.title}}</label>
+
+            <span class="input-group-btn" data-ng-hide="todo == todos.editedTodo">
+              <button class="btn btn-default btn-todo" type="button" data-ng-click="todos.editTodo(todo)">
+                <span class="glyphicon glyphicon-pencil"></span>
+              </button>
+            </span>
+            <span class="input-group-btn" data-ng-show="todo == todos.editedTodo">
+              <button class="btn btn-default btn-todo" type="button" data-ng-click="todos.doneEditing(todo)">
+                <span class="glyphicon glyphicon-ok"></span>
+              </button>
+            </span>
+
+            <span class="input-group-btn">
+              <button class="btn btn-default btn-todo" type="button" data-ng-click="todos.removeTodo(todo)">
+                <span class="glyphicon glyphicon-remove"></span>
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!--     completed todos -->
+      <div data-ng-class="todos.showTodo.active && todos.showTodo.completed ? 'col-md-5' : 'col-md-10'">
+        <div data-ng-show="todos.showTodo.completed">
+          <span class="label label-default" data-ng-show="todos.showTodo.completed">Completed todos</span>
+
+          <div class="input-group input-group-sm input-group-space animate"
+               data-ng-repeat="todo in completedTodos = (todos.todos | filter: {completed: true})">
+            <span class="input-group-btn">
+              <button class="btn btn-default btn-todo" type="button" data-ng-click="todos.todoCompleted(todo)">
+                <span class="glyphicon glyphicon-check"></span>
+              </button>
+            </span>
+
+            <form data-ng-submit="todos.doneEditing(todo)" data-ng-show="todo == todos.editedTodo">
+              <input type="text" class="form-control input-sm todoInput" data-ng-model="todo.title"
+                     data-ng-blur="todos.doneEditing(todo)"
+                     data-todo-escape="todos.revertEditing(todo)" data-todo-focus="todo == todos.editedTodo">
+            </form>
+
+            <label class="todoLabel todoCompletedLabel hideOverflow" data-ng-hide="todo == todos.editedTodo"
+                   data-ng-dblclick="todos.editTodo(todo)">{{todo.title}}</label>
+
+            <span class="input-group-btn" data-ng-hide="todo == todos.editedTodo">
+              <button class="btn btn-default btn-todo" type="button" data-ng-click="todos.editTodo(todo)">
+                <span class="glyphicon glyphicon-pencil"></span>
+              </button>
+            </span>
+            <span class="input-group-btn" data-ng-show="todo == todos.editedTodo">
+              <button class="btn btn-default btn-todo" type="button" data-ng-click="todos.doneEditing(todo)">
+                <span class="glyphicon glyphicon-ok"></span>
+              </button>
+            </span>
+
+            <span class="input-group-btn">
+              <button class="btn btn-default btn-todo" type="button" data-ng-click="todos.removeTodo(todo)">
+                <span class="glyphicon glyphicon-remove"></span>
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2"></div>
+    </div>
+  </div>
+</div>
