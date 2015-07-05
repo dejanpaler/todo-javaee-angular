@@ -58,7 +58,7 @@ Project is maven based. Import it to the preferred IDE.
 
 * mutation testing
 
-    mvn org.pitest:pitest-maven:mutationCoverage
+    mvn clean install org.pitest:pitest-maven:mutationCoverage
 
 * load testing
 

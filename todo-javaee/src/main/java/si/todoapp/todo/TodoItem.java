@@ -1,13 +1,17 @@
 package si.todoapp.todo;
 
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.validation.groups.Default;
 import java.util.Objects;
 
+@Entity
 public class TodoItem {
 
+    @Id
     @NotNull
     @Size(min=22, max=22)
     private String id;
