@@ -2,9 +2,17 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-    <persistence-unit name="prod" transaction-type="JTA">
+
+    <persistence-unit name="todo" transaction-type="JTA">
+        <jta-data-source>java:app/todoItem</jta-data-source>
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
-            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+            <!--
+                Very unfortunate workaround to get the data source to work with JPA in WildFly 8.
+                See https://issues.jboss.org/browse/WFLY-2727
+            -->
+            <property name="wildfly.jpa.twophasebootstrap" value="false" />
+            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create" />
         </properties>
     </persistence-unit>
 </persistence>

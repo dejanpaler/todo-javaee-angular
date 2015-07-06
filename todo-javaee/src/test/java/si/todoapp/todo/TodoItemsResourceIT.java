@@ -37,7 +37,7 @@ public class TodoItemsResourceIT {
 
     private static final String ARCHIVE_NAME = "todoapp-javaee.war";
 
-    private static final String TODO_ITEMS_URI = "http://localhost:8080/todoapp-javaee/todo-items";
+    private static final String TODO_ITEMS_URI = "http://localhost:8181/todoapp-javaee/todo-items";
 
     public static final String LOREM_256 = "Lorem ipsum dolor sit amet, solet inermis nominati pro id, ut sed zril " +
             "eirmod, ad melius detraxit eos. At sed postea feugait vituperata. Eam ut ceteros splendide, duo in modus " +

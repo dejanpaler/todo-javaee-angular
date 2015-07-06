@@ -42,6 +42,18 @@ Main goal of the project setup is to show how to be productive while having fun 
 
 Project is maven based. Import it to the preferred IDE. 
 
+### MySql setup
+
+Crete todo database with todo user and grant users permissions. Database credentials are used in class 
+```si.todoapp.todo.TodoItemDataSource```.
+
+    CREATE DATABASE todo CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+    CREATE USER 'todo' IDENTIFIED BY 'todo';
+    GRANT ALL ON todo.* TO 'todo'@'%' IDENTIFIED BY 'todo';
+    GRANT ALL ON todo.* TO 'todo'@'localhost' IDENTIFIED BY 'todo';
+    FLUSH PRIVILEGES;
+
 ### Tests
 
 * run maven integration test
