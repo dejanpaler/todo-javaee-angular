@@ -66,4 +66,20 @@ Project is maven based. Import it to the preferred IDE.
 
 * sonar
 
-   TODO
+Create reports for unit tests and integration tests:
+
+```
+    mvn -T 1C clean
+    
+    mvn -T 1C org.jacoco:jacoco-maven-plugin:prepare-agent install -Dmaven.test.failure.ignore=true org.jacoco:jacoco-maven-plugin:report
+    
+    mvn -T 1C org.jacoco:jacoco-maven-plugin:prepare-agent-integration failsafe:integration-test install -Dmaven.test.failure.ignore=true org.jacoco:jacoco-maven-plugin:report-integration
+```
+
+Analyse the project:
+
+```
+mvn -T 1C sonar:sonar -Dsonar.host.url=http://localhost:9000
+```
+
+
