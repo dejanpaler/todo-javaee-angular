@@ -2,7 +2,7 @@ package com.todoapp.todo;
 
 import com.todoapp.cache.MapCacheContainer;
 import com.todoapp.logging.Log;
-import com.todoapp.startup.StartupEvent;
+import com.todoapp.startup.ApplicationStartupEvent;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -37,7 +37,7 @@ public class TodoItemsTest {
 
   @Test
   public void shouldCreateSampleTodoItems() throws Exception {
-    todoItems.createSampleTodoItems(new StartupEvent() {
+    todoItems.createSampleTodoItems(new ApplicationStartupEvent() {
     });
 
     verify(cacheMap, times(5)).put(anyString(), any());

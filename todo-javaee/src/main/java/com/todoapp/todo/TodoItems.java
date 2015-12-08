@@ -2,7 +2,7 @@ package com.todoapp.todo;
 
 import com.todoapp.cache.MapCacheContainer;
 import com.todoapp.logging.Log;
-import com.todoapp.startup.StartupEvent;
+import com.todoapp.startup.ApplicationStartupEvent;
 
 import java.time.Instant;
 import java.util.Collection;
@@ -30,9 +30,9 @@ public class TodoItems {
   /**
    * Automatically inserts sample todo items when application starts.
    *
-   * @param startupEvent - the event when application is started
+   * @param applicationStartupEvent - the event when application is started
    */
-  public void createSampleTodoItems(@Observes StartupEvent startupEvent) {
+  public void createSampleTodoItems(@Observes ApplicationStartupEvent applicationStartupEvent) {
     log.info("Creating sample todo items...");
 
     IntStream.rangeClosed(1, 5).forEach(

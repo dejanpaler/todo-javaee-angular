@@ -10,21 +10,23 @@ import javax.inject.Inject;
 
 @Singleton
 @Startup
-public class StartupEventNotifier {
+public class ApplicationStartup {
 
   @Inject
   Log log;
 
   @Inject
-  Event<StartupEvent> event;
+  Event<ApplicationStartupEvent> event;
+
+  @Inject
+  ApplicationStartupEvent applicationStartupEvent;
 
   /**
    * Fires start up event when application is started.
    */
   @PostConstruct
   public void init() {
-    log.info("Application started.");
-    event.fire(new StartupEvent() {
-    });
+    log.info("Firing application startup event...");
+    event.fire(applicationStartupEvent);
   }
 }

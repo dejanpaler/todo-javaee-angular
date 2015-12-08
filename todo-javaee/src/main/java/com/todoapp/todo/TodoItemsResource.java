@@ -72,8 +72,7 @@ public class TodoItemsResource {
   @Produces(MediaType.APPLICATION_JSON)
   public Response getTodoItems() {
     final Collection<TodoItem> allTodoItems = todoItems.getAllTodoItems();
-    GenericEntity<Collection<TodoItem>> list =
-        new GenericEntity<Collection<TodoItem>>(allTodoItems) {};
+    GenericEntity<Collection<TodoItem>> list = new TodoItemsEntity(allTodoItems);
 
     return Response
       .ok(list)
@@ -153,4 +152,9 @@ public class TodoItemsResource {
         .build();
   }
 
+  private static class TodoItemsEntity extends GenericEntity<Collection<TodoItem>> {
+    public TodoItemsEntity(Collection<TodoItem> allTodoItems) {
+      super(allTodoItems);
+    }
+  }
 }
