@@ -4,6 +4,7 @@
 var chai = require('chai')
   , chaiAsPromised = require('chai-as-promised')
   , expect = chai.expect
+  , moment = require('moment')
   , TodosPagePo = require('./todos.po');
 
 chai.use(chaiAsPromised);
@@ -19,7 +20,8 @@ describe('Todos page', function () {
 
   it('should insert new todo item', function () {
     todosPage.activeTodos.count().then(function (activeTodosCount) {
-      todosPage.newTodo.sendKeys('Adding new todo item.');
+      todosPage.newTodo.sendKeys('Adding new todo item at ' +
+                                 moment().format('YYYY-MM-DD HH:mm:ss,SSS') + '.');
       todosPage.newTodo.sendKeys(protractor.Key.ENTER);
 
       todosPage.activeTodos.count().then(function (newTodoCount) {
