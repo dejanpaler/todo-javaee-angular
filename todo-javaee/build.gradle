@@ -1,0 +1,76 @@
+import de.gesellix.gradle.docker.tasks.*
+
+buildscript {
+  repositories {
+    mavenLocal()
+    jcenter()
+    maven { url "https://plugins.gradle.org/m2/" }
+  }
+}
+
+plugins {
+  id "com.github.ben-manes.versions" version "0.11.3"
+  id "de.gesellix.docker" version "2015-11-04T21-33-37"
+}
+
+apply plugin: 'war'
+
+ext {
+  localDockerHost = System.env.DOCKER_HOST
+}
+
+allprojects {
+  apply plugin: 'base'
+  apply plugin: "de.gesellix.docker"
+
+  docker {
+    dockerHost = localDockerHost
+  }
+}
+
+war.archiveName 'todoapp-javaee.war'
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  providedCompile group: 'javax', name: 'javaee-api', version: '7.0'
+}
+
+task rmImage(type: DockerRmiTask) {
+  imageId = "foo"
+}
+
+task buildImage(type: DockerBuildTask) {
+  dependsOn rmImage
+  imageName = "foo"
+  buildContextDirectory = file("./docker/")
+}
+
+task stopContainer(type: DockerStopTask) {
+  dependsOn buildImage
+  containerId = "foo"
+}
+
+task rmContainer(type: DockerRmTask) {
+  dependsOn stopContainer
+  containerId = "foo"
+}
+
+task runContainer(type: DockerRunTask) {
+  dependsOn rmContainer
+  imageName = "foo"
+  containerName = "foo"
+  ports = ["8080:8080", "9990:9990", "8787:8787"]
+}
+
+task copyWar(type: Copy) {
+  from 'build/libs/todoapp-javaee.war'
+  into 'docker'
+}
+
+task serve(dependsOn: ['war', 'copyWar', 'buildImage', 'runContainer'])
+copyWar.mustRunAfter war
+buildImage.mustRunAfter copyWar
+runContainer.mustRunAfter buildImage

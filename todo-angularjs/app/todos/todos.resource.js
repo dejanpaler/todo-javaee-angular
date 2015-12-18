@@ -15,7 +15,7 @@
   function TodosResource($http, $log, $q) {
     var todoItemsUrl, TodosResourceBase, prettyJson;
 
-    todoItemsUrl = 'http://localhost:8080/todoapp-javaee/todo-items/';
+    todoItemsUrl = 'http://dockerhost:8080/todoapp-javaee/todo-items/';
     TodosResourceBase = {
       getTodoItems: getTodoItems,
       deleteTodoItem: deleteTodoItem,
