@@ -65,23 +65,21 @@ public class TodoItemsTest {
         .id("todoId")
         .title("todo")
         .build();
-    doReturn(true).when(cacheMap).containsKey("todoId");
     doReturn(todoItem).when(cacheMap).get("todoId");
 
     final Optional<TodoItem> optionalTodoItem = todoItems.getTodoItem("todoId");
 
-    verify(cacheMap).containsKey("todoId");
     verify(cacheMap).get("todoId");
     assertThat(optionalTodoItem.get(), is(equalTo(todoItem)));
   }
 
   @Test
   public void shouldGetEmptyOptionalWhenGetTodoItemIsNonexistent() throws Exception {
-    doReturn(false).when(cacheMap).containsKey("todoId");
+    doReturn(null).when(cacheMap).get("todoId");
 
     final Optional<TodoItem> optionalTodoItem = todoItems.getTodoItem("todoId");
 
-    verify(cacheMap).containsKey("todoId");
+    verify(cacheMap).get("todoId");
     assertThat(optionalTodoItem.isPresent(), is(equalTo(false)));
   }
 
@@ -91,23 +89,18 @@ public class TodoItemsTest {
         .id("todoId")
         .title("todo")
         .build();
-    doReturn(true).when(cacheMap).containsKey("todoId");
     doReturn(todoItem).when(cacheMap).remove("todoId");
 
     final Optional<TodoItem> optionalTodoItem = todoItems.deleteTodoItem("todoId");
 
-    verify(cacheMap).containsKey("todoId");
     verify(cacheMap).remove("todoId");
     assertThat(optionalTodoItem.get(), is(equalTo(todoItem)));
   }
 
   @Test
   public void shouldNotDeleteNonexistentTodoItem() throws Exception {
-    doReturn(false).when(cacheMap).containsKey("todoId");
-
     final Optional<TodoItem> optionalTodoItem = todoItems.deleteTodoItem("todoId");
 
-    verify(cacheMap).containsKey("todoId");
     assertThat(optionalTodoItem.isPresent(), is(equalTo(false)));
   }
 
@@ -118,13 +111,11 @@ public class TodoItemsTest {
         .title("todo")
         .completed(true)
         .build();
-    doReturn(true).when(cacheMap).containsKey("todoId");
     doReturn(todoItem).when(cacheMap).get("todoId");
 
     final Optional<TodoItem> optionalTodoItem = todoItems
         .updateTodoItem("todoId", "updated title", false);
 
-    verify(cacheMap).containsKey("todoId");
     verify(cacheMap).get("todoId");
     assertThat(optionalTodoItem.get().getTitle(), is(equalTo("updated title")));
     assertThat(optionalTodoItem.get().getCompleted(), is(equalTo(false)));
@@ -132,12 +123,10 @@ public class TodoItemsTest {
 
   @Test
   public void shouldNotUpdateNonexistentTodoItem() throws Exception {
-    doReturn(false).when(cacheMap).containsKey("todoId");
 
     final Optional<TodoItem> optionalTodoItem = todoItems.updateTodoItem("todoId", "todo title",
         false);
 
-    verify(cacheMap).containsKey("todoId");
     assertThat(optionalTodoItem.isPresent(), is(equalTo(false)));
   }
 }

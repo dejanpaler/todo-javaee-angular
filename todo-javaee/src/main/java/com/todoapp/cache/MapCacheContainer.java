@@ -70,16 +70,6 @@ public class MapCacheContainer<K, V> {
   }
 
   /**
-   * Returns true if this cache contains a mapping for the specified key.
-   *
-   * @param key - key whose presence in this cache is to be tested
-   * @return true if this cache contains a association for the specified key
-   */
-  public boolean containsKey(K key) {
-    return cache.containsKey(key);
-  }
-
-  /**
    * Returns the size limit of this cache.
    *
    * @return the size limit of this cache

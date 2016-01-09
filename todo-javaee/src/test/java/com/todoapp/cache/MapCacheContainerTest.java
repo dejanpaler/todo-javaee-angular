@@ -59,7 +59,6 @@ public class MapCacheContainerTest {
     cache.remove("key");
 
     assertThat(cache.values().size(), is(equalTo(0)));
-    assertThat(cache.containsKey("key"), is(equalTo(false)));
   }
 
   @Test
@@ -72,7 +71,6 @@ public class MapCacheContainerTest {
     String removedItem = cache.remove("nonexistent_key");
 
     assertThat(cache.values().size(), is(equalTo(1)));
-    assertThat(cache.containsKey("key"), is(equalTo(true)));
     assertThat(removedItem, is(equalTo(null)));
   }
 

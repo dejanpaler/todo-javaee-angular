@@ -7,7 +7,6 @@ import com.todoapp.startup.ApplicationStartupEvent;
 import java.time.Instant;
 import java.util.Collection;
 import java.util.Optional;
-import java.util.Random;
 import java.util.stream.IntStream;
 
 import javax.ejb.Stateless;
@@ -16,10 +15,6 @@ import javax.inject.Inject;
 
 @Stateless
 public class TodoItems {
-
-  public static final int SAMPLE_BOUND = 100;
-
-  private final Random random = new Random(System.currentTimeMillis());
 
   @Inject
   Log log;
@@ -34,20 +29,13 @@ public class TodoItems {
    */
   public void createSampleTodoItems(@Observes ApplicationStartupEvent applicationStartupEvent) {
     log.info("Creating sample todo items...");
-
-    IntStream.rangeClosed(1, 5).forEach(
-        item -> {
-          TodoItem todoItem = new TodoItem.Builder()
-              .id(TodoItemId.generate())
-              .created(Instant.now().toEpochMilli())
-              .completed(random.nextBoolean())
-              .title("new item " + random.nextInt(SAMPLE_BOUND))
-              .build();
-          cacheMap.put(todoItem.getId(), todoItem);
-          log.info("Created sample todo item {0}: {1}", item, todoItem);
-        });
-
+    IntStream.rangeClosed(1, 5).forEach(this::createRandomTodoItem);
     log.info("Sample todo items created.");
+  }
+
+  private void createRandomTodoItem(int item) {
+    TodoItem todoItem = createTodoItem("new item " + item, item % 2 == 0);
+    log.info("Created sample todo item {0}: {1}", item, todoItem);
   }
 
   /**
@@ -73,8 +61,7 @@ public class TodoItems {
   }
 
   public Optional<TodoItem> getTodoItem(String todoItemId) {
-    return cacheMap.containsKey(todoItemId) ? Optional.of(cacheMap.get(todoItemId)) : Optional
-            .empty();
+    return Optional.ofNullable(cacheMap.get(todoItemId));
   }
 
   /**
@@ -84,8 +71,7 @@ public class TodoItems {
    * @return - the removed todo item or empty optional if todo item not found
    */
   public Optional<TodoItem> deleteTodoItem(String todoItemId) {
-    return cacheMap.containsKey(todoItemId) ? Optional.of(cacheMap.remove(todoItemId)) : Optional
-            .empty();
+    return Optional.ofNullable(cacheMap.remove(todoItemId));
   }
 
   /**
@@ -97,13 +83,16 @@ public class TodoItems {
    * @return updated todo item or empty optional if todo item not found
    */
   public Optional<TodoItem> updateTodoItem(String todoItemId, String title, boolean completed) {
-    if (cacheMap.containsKey(todoItemId)) {
-      TodoItem storedTodoItem = this.cacheMap.get(todoItemId);
+    Optional<TodoItem> todoItemOptional = Optional.ofNullable(this.cacheMap.get(todoItemId));
+
+    if (todoItemOptional.isPresent()) {
+      TodoItem storedTodoItem = todoItemOptional.get();
       storedTodoItem.setCompleted(completed);
       storedTodoItem.setTitle(title);
       return Optional.of(storedTodoItem);
     }
-    return Optional.empty();
+
+    return todoItemOptional;
   }
 
 }
