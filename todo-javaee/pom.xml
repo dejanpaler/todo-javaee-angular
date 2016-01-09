@@ -74,17 +74,17 @@
                 <version>1.1.4</version>
                 <configuration>
                     <targetClasses>
-                        <param>si.todoapp*</param>
+                        <param>com.todoapp*</param>
                     </targetClasses>
                     <targetTests>
-                        <param>si.todoapp*</param>
+                        <param>com.todoapp*</param>
                     </targetTests>
                     <excludedClasses>
                         <class>*IT</class>
                     </excludedClasses>
                     <avoidCallsTo>
                         <avoidCallsTo>java.util.logging</avoidCallsTo>
-                        <avoidCallsTo>si.todoapp.logging</avoidCallsTo>
+                        <avoidCallsTo>com.todoapp.logging</avoidCallsTo>
                     </avoidCallsTo>
                 </configuration>
             </plugin>
