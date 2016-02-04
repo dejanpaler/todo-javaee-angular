@@ -1,10 +1,8 @@
 Todo Application based on Java EE and AngularJS
 ===============================================
-Todo application is a web based todo list manager. It helps users to create new todos, 
-view entered todos, update specific todo and delete selected todo. 
+Todo application is a web based todo list manager. It helps users to create new todos, view entered todos, update specific todo and delete selected todo. 
 
-Server side is based on Java EE platform. Client side laverages AngularJS framework. 
-It exposes business logic through the REST API which are consumed by stateless client using JavaScript framework - Angularjs.     
+Server side is based on Java EE platform. Client side laverages AngularJS framework. It exposes business logic through the REST API which are consumed by stateless client using JavaScript framework - Angularjs.     
 
 Use case for the application is inspired by [todomvc](http://todomvc.com/).
 
@@ -51,3 +49,8 @@ The continuous deployment is enabled with [Docker](https://www.docker.com) and [
 
 Running continuous deployment: 
 `gradle server -t`
+
+Enabled continuous deployment will watch for any changes in the source code and automatically initiate application build, docker build and restart the docker container. 
+
+#### Debugging
+Application server within the docker container is started with the debugging support. Container exposes port 8787 and standard Java remote debugging can be configured in preferred IDE.  
