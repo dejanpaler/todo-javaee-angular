@@ -1,6 +1,8 @@
 FROM jboss/wildfly
 
-ADD todoapp-javaee.war /opt/jboss/wildfly/standalone/deployments
+RUN curl -L https://repository.jboss.org/nexus/service/local/repositories/releases/content/org/jboss/logmanager/jboss-logmanager-ext/1.0.0.Alpha3/jboss-logmanager-ext-1.0.0.Alpha3.jar -o /opt/jboss/wildfly/jboss-logmanager-ext-1.0.0.Alpha3.jar
 
-RUN /opt/jboss/wildfly/bin/add-user.sh admin admin --silent
-CMD ["/opt/jboss/wildfly/bin/standalone.sh", "-b", "0.0.0.0", "-bmanagement", "0.0.0.0", "--debug"]
+ADD logstash-module.sh /opt/jboss/wildfly/logstash-module.sh
+ADD todoapp-javaee.war /tmp
+
+CMD ["/opt/jboss/wildfly/logstash-module.sh"]
