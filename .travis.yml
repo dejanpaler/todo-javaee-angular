@@ -10,4 +10,5 @@ before_script:
   - bower install
 
 script:
-  - gulp unitTest
+  - cd ../todo-javaee && mvn clean verify
+  - cd ../todo-angularjs gulp unitTest
