@@ -3,7 +3,7 @@ jdk:
   - oraclejdk8
 
 before_script:
-  - nvm use v0.12.7
+  - nvm use v0.11.5
   - npm install -g bower gulp
   - cd todo-angularjs && npm install
   - npm bower
