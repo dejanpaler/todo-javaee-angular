@@ -4,8 +4,8 @@ jdk:
 
 before_script:
   - npm install -g bower gulp
-  - npm install
+  - cd todo-angularjs && npm install
   - npm bower
 
 script:
-  - cd todo-angularjs && gulp unitTest
+  - gulp unitTest
