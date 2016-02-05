@@ -7,7 +7,7 @@ before_script:
   - nvm use 0.11
   - npm install -g bower gulp
   - cd todo-angularjs && npm install
-  - npm bower
+  - bower install
 
 script:
   - gulp unitTest
