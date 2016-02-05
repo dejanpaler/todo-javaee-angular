@@ -1,5 +1,11 @@
 language: java
 jdk:
   - oraclejdk8
-sudo: false
-script: cd todo-javaee && mvn clean verify
+
+before_script:
+  - sudo npm install -g bower gulp
+  - sudo npm install
+  - sudo npm bower
+
+script:
+  - cd todo-angularjs && gulp unitTest
