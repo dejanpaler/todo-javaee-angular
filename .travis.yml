@@ -3,9 +3,9 @@ jdk:
   - oraclejdk8
 
 before_script:
-  - sudo npm install -g bower gulp
-  - sudo npm install
-  - sudo npm bower
+  - npm install -g bower gulp
+  - npm install
+  - npm bower
 
 script:
   - cd todo-angularjs && gulp unitTest
