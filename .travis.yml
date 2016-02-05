@@ -11,4 +11,4 @@ before_script:
 
 script:
   - cd ../todo-javaee && mvn clean verify
-  - cd ../todo-angularjs gulp unitTest
+  - cd ../todo-angularjs && gulp unitTest
