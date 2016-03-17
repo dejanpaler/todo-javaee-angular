@@ -2,6 +2,7 @@
 
 var _ = require('underscore.string')
   , fs = require('fs')
+  , del = require('del')
   , path = require('path')
 
   , bowerDir = JSON.parse(fs.readFileSync('.bowerrc')).directory + path.sep;
@@ -287,5 +288,14 @@ module.exports = function (gulp, $, config) {
       });
   });
 
-  gulp.task('build', ['deleteTemplates', 'bowerAssets', 'images', 'fonts']);
+  gulp.task('deleteDocker', ['deleteTemplates'], function(cb) {
+    del([config.dockerDir + config.outDir], cb);
+  });
+
+  gulp.task('copyDocker', ['deleteDocker'], function() {
+    return gulp.src(config.buildDir + '**/*', {base:"."})
+      .pipe(gulp.dest(config.dockerDir));
+  });
+
+  gulp.task('build', ['deleteTemplates', 'bowerAssets', 'images', 'fonts', 'copyDocker']);
 };

@@ -1,0 +1,6 @@
+version: '2'
+services:
+  todo-ngnx:
+    build: .
+    ports:
+     - "8888:80"
